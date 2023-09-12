@@ -1,0 +1,139 @@
+.yellow-container{
+    width: 100%;
+    background-color: rgb(255, 221, 0);
+    height: 3rem;
+    display: flex;
+    align-items: center;
+}
+
+.yellow-container div{
+    width: 70%;
+    margin-left: 4rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+.detail-main-container{
+    width: 90%;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
+.ad-container{
+    height: 80vh;
+    width: 20rem;
+    border: 1px solid black;
+    background-color: white;
+}
+.ad-wrapper{
+    position: sticky;
+    top: 17rem;
+    height: 50vh;
+    width: 100%;
+    background-color: red;
+}
+
+.title-wrapper{
+
+    border-bottom: 1px dotted black;
+}
+
+
+.title-wrapper p{
+    font-size: 1.4rem;
+}
+.title-wrapper h2{
+    text-transform: uppercase;
+    font-size: 4rem;
+    letter-spacing: 2px;
+}
+
+.submitted-wrapper{
+    width: 100%;
+    margin-top: 1rem;
+}
+.submitted-wrapper div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    font-size:1.5rem ;
+}
+
+.submitted-wrapper div img{
+    width:5rem;
+    height: 5rem;
+    border-radius: 50%;
+}
+
+.save-download-wrapper{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.i-made-this-wrapper{
+    width: 30%;
+    height: 3rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: yellow;
+    justify-content: center ;
+    gap: 1rem;
+    cursor: pointer;
+}
+.i-made-this-wrapper img{
+    width: 15%;
+}
+
+.saved-print-wrapper {
+    display: flex;
+    flex-direction: row;
+    width: 65%;
+    height: 4rem;
+    justify-content: space-around;
+}
+
+.saved-print-wrapper img{
+    cursor: pointer;
+    width: 10%;
+    height: 3rem;
+    background-color: rgb(240, 239, 239);
+    padding:0.5rem ;
+}
+
+.imgs-wrapper{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+.imgs-wrapper img{
+    border-radius: 5px;
+}
+
+.big-img-wrapper{
+    width: 100%;
+}
+.big-img-wrapper img{
+    height: 26rem;
+    width: 100%;
+}
+
+.small-imgs-wrapper{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: space-between;
+}
