@@ -24,6 +24,7 @@ import moreideas2 from "../../Assets/Homepage/More Ideas images/moreideas-2.webp
 import moreideas3 from "../../Assets/Homepage/More Ideas images/moreideas-3.webp";
 import moreideas4 from "../../Assets/Homepage/More Ideas images/moreideas-4.webp";
 import peeches from "../../Assets/Homepage/Peeches/peeches.webp";
+import userIcon from "../../Assets/Nav-buttons-icons/user-icon.jpg";
 
 import { Link } from "react-router-dom";
 import "./homepage.css";
@@ -33,6 +34,7 @@ import NewNav from "../../Components/Navbar/NewNav";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setIsLoggedIn } from "../../Feautes/Slice";
+import { fetchRecipeList } from "../../Utilities/utilities";
 
 const Homepage = () => {
   const dispatch = useDispatch();
@@ -40,6 +42,7 @@ const Homepage = () => {
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const [comments, setComments] = useState(null);
+  const [fanFav, setFanFav] = useState(null);
 
   const showAuth = () => {
     setShowLogin(true);
@@ -62,7 +65,7 @@ const Homepage = () => {
     const token = localStorage.getItem("token");
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-    const resp = await axios("http://localhost:5050/checkloggedin");
+    const resp = await axios("https://food-com-backend.onrender.com/checkloggedin");
 
     console.log(resp);
     dispatch(setIsLoggedIn(resp.data.isLoggedIn));
@@ -81,8 +84,8 @@ const Homepage = () => {
 
   const fetchComments = async () => {
     try {
-      const resp = await axios.get("http://localhost:5050/getcomments");
-      // console.log(resp.data);
+      const resp = await axios.get("https://food-com-backend.onrender.com/getcomments");
+      console.log(resp.data);
       setComments(resp.data);
     } catch (err) {
       console.log(err);
@@ -91,9 +94,22 @@ const Homepage = () => {
 
   // for (let i = 0; data.length > 4; i++) {}
 
+  const fetchFanFav = async () => {
+    try {
+      const resp = await fetchRecipeList("fan favourites");
+      console.log(resp.hits);
+      setFanFav(resp.hits);
+    } catch (err) {
+      console.log(err);
+    }
+
+    // console.log(resp.data);
+  };
+
   useEffect(() => {
     checkLoggedIn();
     fetchComments();
+    fetchFanFav();
   }, []);
 
   return (
@@ -115,7 +131,7 @@ const Homepage = () => {
 
         <div className="below-main-ad-container"></div>
 
-        {/* <div className="comments-container">
+        <div className="comments-container">
           <div className="comments-section-title">
             <h2>FRESH FROM OUR COMMUNITY</h2>
             <Link>View All</Link>
@@ -127,13 +143,24 @@ const Homepage = () => {
                   .map((item, index) => {
                     return (
                       <div className="comments-card" key={index}>
-                        <p>{item.user} commented</p>
+                        <div className="user-name">
+                          <img src={userIcon} alt="icon" />
+                          <div>
+                            {" "}
+                            <span className="user">{item.user}</span>
+                            <span className="commented-txt"> commented</span>
+                          </div>
+                        </div>
+                        <div className="comments-txt">{item.comment}</div>
+                        <div className="comment-time">
+                          <p>{item.time} AGO</p>
+                        </div>
                       </div>
                     );
                   })
               : "No Comments"}
           </div>
-        </div> */}
+        </div>
 
         <div className="craving-container">
           <div className="craving-title">
@@ -223,28 +250,28 @@ const Homepage = () => {
 
           <div className="trending-imgs-wrapper">
             <div className="trending-imgs">
-              <Link>
+              <Link to="/details?q=pineapple zucchine bread">
                 <img src={trending1} alt="PINEAPPLE ZUCCHINI BREAD" />
                 <p>PINEAPPLE ZUCCHINI BREAD</p>
               </Link>
             </div>
 
             <div className="trending-imgs">
-              <Link>
+              <Link to="/details?q=spicy broccli chedder soup">
                 <img src={trending2} alt="SPICY BROCCLI-CHEDDER SOUP" />
                 <p>SPICY BROCCLI-CHEDDER SOUP</p>
               </Link>
             </div>
 
             <div className="trending-imgs">
-              <Link>
+              <Link to="/details?q=chicken enchiladas">
                 <img src={trending3} alt="QUICK & EASY CHICKEN ENCHILADAS" />
                 <p>QUICK & EASY CHICKEN ENCHILADAS</p>
               </Link>
             </div>
 
             <div className="trending-imgs">
-              <Link>
+              <Link to="/details?q=lemonade scones">
                 <img src={trending4} alt="GLUTEN FREE LEMONADE SCONES" />
                 <p>GLUTEN FREE LEMONADE SCONESS</p>
               </Link>
@@ -296,28 +323,28 @@ const Homepage = () => {
 
           <div className="more-ideas-imgs-wrapper">
             <div className="more-ideas-imgs">
-              <Link>
+              <Link tp="/details?q=chicken tikka masala">
                 <img src={moreideas1} alt="CHICKEN TIKKA MASALA" />
                 <p>CHICKEN TIKKA MASALA</p>
               </Link>
             </div>
 
             <div className="more-ideas-imgs">
-              <Link>
+              <Link to="/details?q=vegan bacon">
                 <img src={moreideas2} alt="VEGAN BACON" />
                 <p>VEGAN BACON</p>
               </Link>
             </div>
 
             <div className="more-ideas-imgs">
-              <Link>
+              <Link to="/details?q=big mac sauce">
                 <img src={moreideas3} alt="COPYCAT MC DONALD'S BIG MAC SAUCE" />
                 <p>COPYCAT MC DONALD'S BIG MAC SAUCE</p>
               </Link>
             </div>
 
             <div className="more-ideas-imgs">
-              <Link>
+              <Link to="/details?q=shrimp in butter bear sauce">
                 <img src={moreideas4} alt="DIRT SHRIMP IN BUTTER BEER SAUCE" />
                 <p>DIRTY SHRIMP IN BUTTER BEER SAUCE</p>
               </Link>
@@ -329,15 +356,50 @@ const Homepage = () => {
 
         <div className="peel-peaches-container">
           <div className="peech-img-wrapper">
-            <img src={peeches} alt="HOW TO PEEL PEACHES" />
+            <Link to="details?q=peeches">
+              <img src={peeches} alt="HOW TO PEEL PEACHES" />
+            </Link>
           </div>
           <div className="peech-desc-wrapper">
-            <p>COLLECTION</p>
-            <h3>HOW TO PEEL PEACHES,3 WAYS</h3>
-            <p className="peeling-desc">
-              There’s more than one way to peel a peach! Here are three ways to
-              get the job done.
-            </p>
+            {" "}
+            <Link to="/details?q=peeches">
+              <p>COLLECTION</p>
+              <h3>HOW TO PEEL PEACHES,3 WAYS</h3>
+              <p className="peeling-desc">
+                There’s more than one way to peel a peach! Here are three ways
+                to get the job done.
+              </p>
+            </Link>
+          </div>
+        </div>
+
+        <div className="fav-container">
+          <div className="fav-wrapper">
+            <div className="fav-title-wrapper">
+              <h3>FAN FAVOURITES</h3>
+              <p>
+                <Link>View All</Link>
+              </p>
+            </div>
+
+            <div className="fav-cards-wrapper">
+              {fanFav
+                ? fanFav.map((item, index) => {
+                  return (
+                    <div className="fav-card">
+                          <Link to={`/details?q=${item.recipe.label}`}>
+                          <div className="fav-img">
+                            <img src={item.recipe.image} alt={item.label} />
+                          </div>
+                          <div className="fav-dish">
+                            <p>{item.recipe.label}</p>
+                          </div>
+                      </Link> 
+                        </div>
+                    );
+                  })
+                : "Loading"}
+            </div>
           </div>
         </div>
       </main>

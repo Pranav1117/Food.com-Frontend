@@ -1,8 +1,16 @@
 import React from "react";
 import searchIcon from "../../Assets/Nav-buttons-icons/search black icon.png";
 import "./footsearch.css";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const FootSearch = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleOnChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
   return (
     <>
       <div className="foot-search-container">
@@ -16,9 +24,16 @@ const FootSearch = () => {
                 className="foot-search-icon"
               />
             </span>
-            <input type="text" placeholder="I'm craving..." />
+            <input
+              type="text"
+              placeholder="I'm craving..."
+              name="search"
+              onChange={handleOnChange}
+            />
           </div>
-          <button className="foot-search-btn">SEARCH</button>
+          <Link className="foot-search-link" to={`/recipe?q=${searchQuery}`}>
+            <button className="foot-search-btn">SEARCH</button>
+          </Link>
         </form>
       </div>
     </>

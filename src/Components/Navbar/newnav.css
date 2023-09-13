@@ -204,6 +204,7 @@ border-bottom: 1px solid aquamarine;
     padding: 1rem;
     width: 10rem;
     right: 1rem;
+    z-index: 1000;
 }
 
 .avatar-list li{

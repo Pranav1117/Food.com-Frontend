@@ -30,11 +30,11 @@ const Login = (props) => {
 
   const handleClick = async (e) => {
     e.preventDefault();
-    const resp = await axios.post("http://localhost:5050/login", user);
-    console.log(resp.data.msg);
+    const resp = await axios.post("https://food-com-backend.onrender.com/login", user);
+    console.log(resp.data);
     const status = resp.data.msg;
 
-    if (status == "User logged in successfully") {
+    if (resp.data.token) {
       props.closeFunc();
       dispatch(setIsLoggedIn(true));
       localStorage.setItem("token", resp.data.token);

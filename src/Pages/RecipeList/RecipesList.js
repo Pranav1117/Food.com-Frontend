@@ -8,6 +8,7 @@ import pintIcon from "../../Assets/Footer Icons/pinterest.png";
 import fbIcon from "../../Assets/Footer Icons/facebook.png";
 import mailIcon from "../../Assets/Footer Icons/email.png";
 import NewNav from "../../Components/Navbar/NewNav";
+import Footer from "../../Components/Footer/Footer";
 
 const RecipesList = () => {
   const [data, setData] = useState(null);
@@ -100,6 +101,7 @@ const RecipesList = () => {
               <div className="ad-container"></div>
             </div>
           </div>
+          <Footer/>
         </>
       ) : (
         "Loading"

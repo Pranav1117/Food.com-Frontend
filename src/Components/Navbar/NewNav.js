@@ -58,7 +58,7 @@ const NewNav = () => {
     const token = localStorage.getItem("token");
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-    const resp = await axios("http://localhost:5050/logout");
+    const resp = await axios("https://food-com-backend.onrender.com/logout");
 
     console.log(resp);
     localStorage.setItem("token", null);
@@ -70,9 +70,9 @@ const NewNav = () => {
       const token = localStorage.getItem("token");
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-      const resp = await axios("http://localhost:5050/checkloggedin");
+      const resp = await axios("https://food-com-backend.onrender.com/checkloggedin");
 
-      console.log(resp);
+      console.log(resp, "in checkkkkk");
       dispatch(setIsLoggedIn(resp.data.isLoggedIn));
     } catch (err) {
       console.log(err);

@@ -6,12 +6,18 @@ import fbIcon from "../../Assets/Auth/fb.png";
 import gmailIcon from "../../Assets/Auth/gmail.jpeg";
 import { useState } from "react";
 import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { setIsLoggedIn } from "../../Feautes/Slice";
 
 const Register = (props) => {
   const [user, setUser] = useState({
     email: null,
     password: null,
   });
+
+  const dispatch = useDispatch();
+  const state = useSelector((state) => console.log(state.value));
+  const [status, setStaus] = useState(null);
 
   const onChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -23,12 +29,15 @@ const Register = (props) => {
     console.log(user);
     // const token = localStorage.getItem("token");
     // axios.defaults.headers.common["Authorization"] = `Bearer `;
-    const resp = await axios.post("http://localhost:5050/register", user);
+    const resp = await axios.post("https://food-com-backend.onrender.com/register", user);
     console.log(resp);
-    if ((resp.data.msg = "User registred successfully")) {
+    if (resp.data.token) {
       props.closeFunc();
+      dispatch(setIsLoggedIn(true));
+
       localStorage.setItem("token", resp.data.token);
     }
+    setStaus(resp.data.msg);
   };
 
   return (
@@ -79,6 +88,7 @@ const Register = (props) => {
             <button onClick={handleClick}>CREATE ACCOUNT</button>
           </form>
         </div>
+        <p style={{ color: "red" }}>{status}</p>
 
         <Link className="forgot-pass">FORGOT PASSWORD?</Link>
 
