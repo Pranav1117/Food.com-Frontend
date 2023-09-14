@@ -2,13 +2,14 @@ import React from "react";
 import "./auth.css";
 import { Link } from "react-router-dom";
 import closeIcon from "../../Assets/cancel_8618474.png";
-import fbIcon from "../../Assets/Auth/fb.png";
+import fbIcon from "../../Assets/Auth/104458_facebook_social media_fb_social_icon.png";
 import gmailIcon from "../../Assets/Auth/gmail.jpeg";
 import { useState } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { setIsLoggedIn } from "../../Feautes/Slice";
-
+import appleIcon from "../../Assets/Auth/104447_apple_logo_icon.png";
+import amazonIcon from "../../Assets/Auth/amazon-icon.jpg";
 const Register = (props) => {
   const [user, setUser] = useState({
     email: null,
@@ -29,7 +30,10 @@ const Register = (props) => {
     console.log(user);
     // const token = localStorage.getItem("token");
     // axios.defaults.headers.common["Authorization"] = `Bearer `;
-    const resp = await axios.post("https://food-com-backend.onrender.com/register", user);
+    const resp = await axios.post(
+      "https://food-com-backend.onrender.com/register",
+      user
+    );
     console.log(resp);
     if (resp.data.token) {
       props.closeFunc();
@@ -90,16 +94,21 @@ const Register = (props) => {
         </div>
         <p style={{ color: "red" }}>{status}</p>
 
-        <Link className="forgot-pass">FORGOT PASSWORD?</Link>
 
         <div className="auth-socials-container">
           <p className="continue-txt"> OR CONTINUE WITH</p>
-          <div className="icons-container">
+          <div className="icons-container-login">
             <Link>
               <img src={fbIcon} alt="Icon" />
             </Link>
             <Link>
               <img src={gmailIcon} alt="Icon" />
+            </Link>
+            <Link>
+              <img src={appleIcon} alt="icon" />
+            </Link>
+            <Link>
+              <img src={amazonIcon} alt="icon" />
             </Link>
           </div>
 

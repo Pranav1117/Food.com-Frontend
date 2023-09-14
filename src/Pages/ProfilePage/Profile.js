@@ -48,7 +48,7 @@ const Profile = () => {
                 </div>
               </div>
             </div>
-            <hr style={{ zIndex: 100 }} />
+            <hr />
             <div className="join-data-container">
               <p>Joined {date && date}</p>
             </div>

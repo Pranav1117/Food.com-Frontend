@@ -324,4 +324,24 @@ nav ul{
         right: 3rem;
     }
 
+
+    .recipe:hover .recipe-sub{
+        display: none;
+    }
+
+    .popular:hover .popular-sub{
+        display: none;
+    }
+
+    .meat:hover .meat-sub{
+        display: none;
+    }.healthy:hover .healthy-sub{
+        display: none;
+    }.holidays:hover .holidays-sub{
+        display: none;
+    }.cuisine:hover .cuisine-sub{
+        display: none;
+    }.seasonal:hover .seasonal-sub{
+        display: none;
+    }
 }
