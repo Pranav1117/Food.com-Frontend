@@ -46,7 +46,9 @@ const SavedRecipe = () => {
       const token = localStorage.getItem("token");
       axios.defaults.headers.common["Authorization"] = `Beare ${token}`;
 
-      const resp = await axios.get("https://food-com-backend.onrender.com/getsaveredcipe");
+      const resp = await axios.get(
+        "https://food-com-backend.onrender.com/getsaveredcipe"
+      );
       console.log(resp.data.saved.saved_recipes);
       setData(resp.data.saved.saved_recipes);
     } catch (err) {
@@ -121,8 +123,10 @@ const SavedRecipe = () => {
             <div className="discover-btn-container">
               <div className="discover-btn-wrapper">
                 <div>
-                  <img src={addIcon} alt="icon" />
-                  <p>DISOCVER RECIPES</p>
+                  <Link to="/recipe?q=trending now">
+                    <img src={addIcon} alt="icon" />
+                    <p>DISOCVER RECIPES</p>
+                  </Link>
                 </div>
 
                 <div>
@@ -147,9 +151,9 @@ const SavedRecipe = () => {
                             <p className="rating">By {item.source}</p>
                           </div>
 
-                          <div className="rating">
+                          {/* <div className="rating">
                             <p>rating</p>
-                          </div>
+                          </div> */}
                         </div>
                       </Link>
                     </div>
@@ -160,7 +164,27 @@ const SavedRecipe = () => {
         </div>
       )}
 
-      {/* {showBoards &&} */}
+      {showBoards && (
+        <div className="saved-recipe-container">
+          <div className="saved-recipe">
+            <div className="sorting">
+              <div>SORT BY :</div>
+              <div className="sort-by">
+                <p className="newest-txt">Newest</p> |<p className="a-z">A-Z</p>
+              </div>
+            </div>
+
+            <div className="discover-btn-container">
+              <div className="discover-btn-wrapper">
+                <div>
+                  <img src={addIcon} alt="icon" />
+                  <p>NEW BOARD</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };

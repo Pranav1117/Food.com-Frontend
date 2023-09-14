@@ -53,7 +53,7 @@ const SearchPage = () => {
       <div className="result-container">
         {data ? (
           <div className="result-number-wrapper">
-            <div>20 RESULTS</div>
+            <div> RESULTS</div>
           </div>
         ) : (
           ""

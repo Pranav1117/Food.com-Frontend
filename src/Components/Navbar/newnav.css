@@ -344,4 +344,125 @@ nav ul{
     }.seasonal:hover .seasonal-sub{
         display: none;
     }
+
+
+
+   .recipe ul.recipe-nav{
+        position: absolute;
+        top: 6rem;
+        left: 2rem;
+        display: flex;
+        z-index: 100;
+        color: white;
+    }
+
+    .recipe-nav li{
+        height: 0rem;
+        padding: 0.8rem;
+    }
+    
+    .recipe-nav li a{
+        color: white;
+        padding: 1rem;
+    }
+
+    .popular-nav{
+        position: absolute;
+        top: 11rem;
+        left: 2rem;
+        z-index: 100;
+        display: flex;
+    }
+    .popular-nav li a{
+        color: white;
+
+    }
+
+    .popular-nav li{
+        height: 0rem;
+        padding: 0.8rem;
+    }
+
+    .meat-nav{
+        position: absolute;
+        top: 19rem;
+        left: 2rem;
+        z-index: 100;
+        display: flex;
+    }
+    .meat-nav li a{
+        color: white;
+
+    }
+    .meat-nav li{
+        height: 0rem;
+        padding: 0.8rem;
+    }
+    .healthy-nav{
+        position: absolute;
+        top: 22rem;
+        left: 2rem;
+        z-index: 100;
+        display: flex;
+    }
+    .healthy-nav li a{
+        color: white;
+
+    }
+     .healthy-nav li{
+        height: 0rem;
+        padding: 0.8rem;
+    }
+
+    .holidays-nav{
+        position: absolute;
+        top: 29rem;
+        left: 2rem;
+        z-index: 100;
+        display: flex;
+    }
+    .holidays-nav li a{
+        color: white;
+
+    }
+    .holidays-nav li{
+        height: 0rem;
+        padding: 0.8rem;
+    }
+
+    .cuisine-nav{
+        position: absolute;
+        top: 35rem;
+        left: 2rem;
+        z-index: 100;
+        display: flex;
+    }
+    .cuisine-nav li a{
+        color: white;
+
+    }
+
+    .cuisine-nav li{
+        height: 0rem;
+        padding: 0.8rem;
+    }
+
+
+    .seasonal-nav{
+        position: absolute;
+        top: 39rem;
+        left: 2rem;
+        z-index: 100;
+        display: flex;
+    }
+    .seasonal-nav li a{
+        color: white;
+
+    }
+
+    .seasonal-nav li{
+        height: 0rem;
+        padding: 0.8rem;
+    }
+
 }
