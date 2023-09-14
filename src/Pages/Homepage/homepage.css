@@ -72,6 +72,18 @@
     margin: auto;
 }
 
+.below-main-ad-container img{
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+   
+}
+
+.ad img{
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+}
 .below-explore-ad-container{
     background-color: #d9d9d9;
     height: 10rem;  
@@ -141,6 +153,7 @@
    width: 20%;
 }
 .comments-txt{
+   overflow: hidden;
    margin-top: 2.5rem;
    height: 60%;
    display: flex;
@@ -443,6 +456,7 @@ text-decoration: none;
 .peech-desc-wrapper h3{
    font-size: 1.7rem;
    font-weight: 500;
+   color: black;
    /* letter-spacing: 1px; */
 }
 .peeling-desc{
@@ -534,18 +548,18 @@ text-decoration: none;
   .main-post-title-wrapper{
    position: relative;
    top: 35%;
-   left: -5%;
+   left: 0;
    flex-direction: column;
    flex-wrap: nowrap;
    align-items: flex-start;
-   width: 74%;
+   width: 90%;
    /* margin: auto; */
   }
 
   .main-post-title-wrapper h1{
    font-size: 2.4rem;
    color: black;
-   width: 90%;
+   width: 100%;
 }
 
 
@@ -590,6 +604,7 @@ text-decoration: none;
 .explore-more-img-wrapper{
    flex-wrap: wrap;
    gap: 1rem;
+   overflow: hidden;
 }
 
 .explore-more-img-wrapper div{
@@ -651,6 +666,7 @@ text-decoration: none;
 
 .peel-peaches-container{
    flex-direction: column;
+   width: 90%;
 }
 
 .peech-img-wrapper{
@@ -705,6 +721,53 @@ text-decoration: none;
    gap: 2rem;
    
 }
-.fav-card{
+
+.below-explore-ad-container{
+   width: 90%;
+   margin-top: 1rem;
+   margin-bottom: 1rem;
+}
+.below-more-ideas-ad-container{
+   width: 90%;
+}
+}
+
+@media only screen and (min-width:200px) and (max-width:500px) {
+.main-post-title-wrapper h1{
+   font-size: 1.5rem;
+}
+
+.explore-more-container h2{
+   font-size: 1.4rem;
+}
+.trending-title h2{
+   font-size: 1.4rem;
+}
+
+.trending-title a{
+   font-size:1rem ;
+}
+
+.dont-miss-title h2{
+   font-size: 1.4rem;
+}
+
+.more-ideas-title h2{
+   font-size: 1.4rem;
+}
+
+.more-ideas-title a{
+   font-size: 1rem;
+}
+
+.peech-desc-wrapper{
+   padding: 1rem;
+}
+
+.fav-title-wrapper h3{
+   font-size:1.4rem;
+}
+.fav-title-wrapper a{
+   font-size:1rem;
 }
 }

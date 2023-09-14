@@ -35,13 +35,32 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setIsLoggedIn } from "../../Feautes/Slice";
 import { fetchRecipeList } from "../../Utilities/utilities";
+import ad from "../../Assets/adverise.webp";
 
 const Homepage = () => {
   const dispatch = useDispatch();
 
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
-  const [comments, setComments] = useState(null);
+  const [comments, setComments] = useState([
+    {
+      comment:
+        "A recipe has no soul. You, as the cook, must bring soul to the recipe.",
+      user: "Thomas Keller",
+      time: "1 HOURS",
+    },
+    {
+      comment: "Recipes tell you nothing. Learning techniques is the key.",
+      user: "Tom Colicchio",
+      time: "4 HOURS",
+    },
+    {
+      comment:
+        "This is my invariable advice to people: Learn how to cook- try new recipes, learn from your mistakes, be fearless, and above all have fun!",
+      user: "Julia Child",
+      time: "20 MINUTES",
+    },
+  ]);
   const [fanFav, setFanFav] = useState(null);
 
   const showAuth = () => {
@@ -65,7 +84,9 @@ const Homepage = () => {
     const token = localStorage.getItem("token");
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-    const resp = await axios("https://food-com-backend.onrender.com/checkloggedin");
+    const resp = await axios(
+      "https://food-com-backend.onrender.com/checkloggedin"
+    );
 
     console.log(resp);
     dispatch(setIsLoggedIn(resp.data.isLoggedIn));
@@ -84,7 +105,9 @@ const Homepage = () => {
 
   const fetchComments = async () => {
     try {
-      const resp = await axios.get("https://food-com-backend.onrender.com/getcomments");
+      const resp = await axios.get(
+        "https://food-com-backend.onrender.com/getcomments"
+      );
       console.log(resp.data);
       setComments(resp.data);
     } catch (err) {
@@ -108,7 +131,7 @@ const Homepage = () => {
 
   useEffect(() => {
     checkLoggedIn();
-    fetchComments();
+    // fetchComments();
     fetchFanFav();
   }, []);
 
@@ -129,7 +152,9 @@ const Homepage = () => {
           </div>
         </div>
 
-        <div className="below-main-ad-container"></div>
+        <div className="below-main-ad-container">
+          <img src={ad} alt="adverise" />
+        </div>
 
         <div className="comments-container">
           <div className="comments-section-title">
@@ -138,26 +163,24 @@ const Homepage = () => {
           </div>
           <div className="comments-wrapper">
             {comments
-              ? comments
-                  .splice(randomNum + 1, randomNum + 2)
-                  .map((item, index) => {
-                    return (
-                      <div className="comments-card" key={index}>
-                        <div className="user-name">
-                          <img src={userIcon} alt="icon" />
-                          <div>
-                            {" "}
-                            <span className="user">{item.user}</span>
-                            <span className="commented-txt"> commented</span>
-                          </div>
-                        </div>
-                        <div className="comments-txt">{item.comment}</div>
-                        <div className="comment-time">
-                          <p>{item.time} AGO</p>
+              ? comments.map((item, index) => {
+                  return (
+                    <div className="comments-card" key={index}>
+                      <div className="user-name">
+                        <img src={userIcon} alt="icon" />
+                        <div>
+                          {" "}
+                          <span className="user">{item.user}</span>
+                          <span className="commented-txt"> commented</span>
                         </div>
                       </div>
-                    );
-                  })
+                      <div className="comments-txt">{item.comment}</div>
+                      <div className="comment-time">
+                        <p>{item.time} AGO</p>
+                      </div>
+                    </div>
+                  );
+                })
               : "No Comments"}
           </div>
         </div>
@@ -240,7 +263,9 @@ const Homepage = () => {
           </div>
         </div>
 
-        <div className="below-explore-ad-container"></div>
+        <div className="below-explore-ad-container ad">
+          <img src={ad} alt="adverise" />
+        </div>
 
         <div className="trending-now-container">
           <div className="trending-title">
@@ -352,7 +377,9 @@ const Homepage = () => {
           </div>
         </div>
 
-        <div className="below-more-ideas-ad-container"></div>
+        <div className="below-more-ideas-ad-container ad">
+          <img src={ad} alt="adverise" />
+        </div>
 
         <div className="peel-peaches-container">
           <div className="peech-img-wrapper">
@@ -385,17 +412,17 @@ const Homepage = () => {
             <div className="fav-cards-wrapper">
               {fanFav
                 ? fanFav.map((item, index) => {
-                  return (
-                    <div className="fav-card">
-                          <Link to={`/details?q=${item.recipe.label}`}>
+                    return (
+                      <div className="fav-card">
+                        <Link to={`/details?q=${item.recipe.label}`}>
                           <div className="fav-img">
                             <img src={item.recipe.image} alt={item.label} />
                           </div>
                           <div className="fav-dish">
                             <p>{item.recipe.label}</p>
                           </div>
-                      </Link> 
-                        </div>
+                        </Link>
+                      </div>
                     );
                   })
                 : "Loading"}

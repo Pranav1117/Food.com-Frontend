@@ -31,6 +31,7 @@ const Register = (props) => {
     // const token = localStorage.getItem("token");
     // axios.defaults.headers.common["Authorization"] = `Bearer `;
     const resp = await axios.post(
+      // "https://food-com-backend.onrender.com/register",
       "https://food-com-backend.onrender.com/register",
       user
     );
@@ -93,7 +94,6 @@ const Register = (props) => {
           </form>
         </div>
         <p style={{ color: "red" }}>{status}</p>
-
 
         <div className="auth-socials-container">
           <p className="continue-txt"> OR CONTINUE WITH</p>

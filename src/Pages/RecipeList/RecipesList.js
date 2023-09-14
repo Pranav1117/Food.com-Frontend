@@ -9,6 +9,7 @@ import fbIcon from "../../Assets/Footer Icons/facebook.png";
 import mailIcon from "../../Assets/Footer Icons/email.png";
 import NewNav from "../../Components/Navbar/NewNav";
 import Footer from "../../Components/Footer/Footer";
+import ad from '../../Assets/adverise.webp'
 
 const RecipesList = () => {
   const [data, setData] = useState(null);
@@ -83,9 +84,9 @@ const RecipesList = () => {
                               <div className="recipe-desc">
                                 <p>RECIPE</p>
                                 <h3>{item.recipe.label}</h3>
-                                <div className="">
+                                {/* <div className="">
                                   {item.recipe.healthLabels}
-                                </div>
+                                </div> */}
                                 <p>-{item.recipe.source}</p>
                               </div>
                             </Link>
@@ -98,7 +99,9 @@ const RecipesList = () => {
                   "Loading"
                 )}
               </div>
-              <div className="ad-container"></div>
+              <div className="ad-container ad">
+                <img src={ad} alt='adverise'/>
+              </div>
             </div>
           </div>
           <Footer/>

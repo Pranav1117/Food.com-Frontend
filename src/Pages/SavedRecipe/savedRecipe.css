@@ -180,7 +180,7 @@
             justify-content: space-between;
         }
         .saved-recipe-card{
-            width: 40%;
+            width: 45%;
             
         }
 
@@ -197,5 +197,9 @@
         .recipe-label{
             padding-left: 1rem;
             padding-right: 1rem;
+        }
+
+        .discover-btn-container{
+            width: 45%;
         }
 }

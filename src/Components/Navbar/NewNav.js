@@ -167,9 +167,7 @@ const NewNav = () => {
       const token = localStorage.getItem("token");
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-      const resp = await axios(
-        "https://food-com-backend.onrender.com/checkloggedin"
-      );
+      const resp = await axios("https://food-com-backend.onrender.com/checkloggedin");
 
       console.log(resp, "in checkkkkk");
       dispatch(setIsLoggedIn(resp.data.isLoggedIn));

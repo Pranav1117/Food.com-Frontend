@@ -13,11 +13,20 @@ import printIcon from "../../Assets/DetailPage/print-icon.jpg";
 import shareIcon from "../../Assets/DetailPage/share-icon.png";
 import cameraIcon from "../../Assets/DetailPage/camera-icon.png";
 import axios from "axios";
+import savedIcon from "../../Assets/DetailPage/savedd.png";
+import { toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import ad from "../../Assets/adverise.webp";
 
 const RecipeDetails = () => {
   const [data, setData] = useState(null);
 
   const [comment, setComment] = useState(null);
+
+  const [showSavedIcon, setShowSavedIcon] = useState(false);
+
+  const [savedRecipes, setSavedRecipes] = useState(false);
 
   const location = useLocation();
 
@@ -39,21 +48,63 @@ const RecipeDetails = () => {
   }
   const randomNum = getRandomNumber();
 
+  const showToast = () => {
+    toast.success("Recipe Bookmark!", {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 2000, // Set the time (in milliseconds) for the toast to auto close
+    });
+  };
+
+  const showRemoveToast = () => {
+    toast.info("Recipe Removed from bookmark!", {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 2000, // Set the time (in milliseconds) for the toast to auto close
+    });
+  };
+
   const handleSaveRecipe = async (recipe) => {
     const token = localStorage.getItem("token");
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-    axios.put("https://food-com-backend.onrender.com/saverecipe", recipe).then((res) => {
+    await axios.put("https://food-com-backend.onrender.com/saverecipe", recipe).then((res) => {
       console.log(res);
+      showToast();
+      setShowSavedIcon(!showSavedIcon);
+    });
+  };
+
+  const handleRemoveRecipe = async (label) => {
+    const token = localStorage.getItem("token");
+    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+    await axios.put("https://food-com-backend.onrender.com/deleterecipe", label).then((res) => {
+      console.log(res.data);
+      showRemoveToast();
+      setShowSavedIcon(!showSavedIcon);
     });
   };
 
   const fetchComments = async () => {
     try {
-      let resp = await axios.get("https://food-com-backend.onrender.com/getcomments");
+      let resp = await axios.get(
+        "https://food-com-backend.onrender.com/getcomments"
+      );
 
       console.log(resp.data);
       setComment(resp.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchSavedRecipes = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      axios.defaults.headers.common["Authorization"] = `Beare ${token}`;
+
+      const resp = await axios.get("https://food-com-backend.onrender.com/getsaveredcipe");
+      // console.log(resp.data);
+      setSavedRecipes(resp.data.saved.saved_recipes);
     } catch (err) {
       console.log(err);
     }
@@ -64,13 +115,15 @@ const RecipeDetails = () => {
       console.log(res);
       setData(res.hits);
     });
-
+    fetchSavedRecipes();
     fetchComments();
   }, []);
+
   console.log(data);
   return (
     <>
       <NewNav />
+      <ToastContainer />
 
       <div className="yellow-container">
         <div>
@@ -105,13 +158,24 @@ const RecipeDetails = () => {
 
             <div className="save-download-wrapper">
               <div className="saved-print-wrapper">
-                <img
-                  onClick={() => {
-                    handleSaveRecipe(data[0].recipe);
-                  }}
-                  src={saveIcon}
-                  alt="Icon"
-                />
+                {!showSavedIcon ? (
+                  <img
+                    onClick={() => {
+                      handleSaveRecipe(data[0].recipe);
+                    }}
+                    src={saveIcon}
+                    alt="Icon"
+                  />
+                ) : (
+                  <img
+                    onClick={() => {
+                      handleRemoveRecipe(data[0].recipe);
+                      console.log(data[0].recipe);
+                    }}
+                    src={savedIcon}
+                    alt="Icon"
+                  />
+                )}
                 <img src={downloadIcon} alt="Icon" />
                 <img src={printIcon} alt="Icon" />
                 <img src={shareIcon} alt="Icon" />
@@ -130,21 +194,6 @@ const RecipeDetails = () => {
                   alt={data[0].recipe.label}
                 />
               </div>
-
-              {/* <div className="small-imgs-wrapper">
-                <img
-                  src={data[0].recipe.images.SMALL.url}
-                  alt={data[0].recipe.label}
-                />
-                <img
-                  src={data[0].recipe.images.SMALL.url}
-                  alt={data[0].recipe.label}
-                />
-                <img
-                  src={data[0].recipe.images.SMALL.url}
-                  alt={data[0].recipe.label}
-                />
-              </div> */}
             </div>
 
             <div className="ready-in-wrapper">
@@ -218,40 +267,42 @@ const RecipeDetails = () => {
                 })}
               </div>
             </div>
+            {data.length > 2 && (
+              <div className="also-love-container">
+                <h3>YOU'LL ALSO LOVE</h3>
+                <div className="also-wrapper">
+                  {data &&
+                    data.splice(1, 4).map((item, index) => {
+                      return (
+                        <div className="also-box">
+                          <Link to={`/details?q=${item.recipe.label}`}>
+                            <div className="also-img ">
+                              {" "}
+                              <img src={item.recipe.image} alt="img" />
+                            </div>
 
-            <div className="also-love-container">
-              <h3>YOU'LL ALSO LOVE</h3>
-              <div className="also-wrapper">
-                {data &&
-                  data.splice(1, 4).map((item, index) => {
-                    return (
-                      <div className="also-box">
-                        <Link to={`/details?q=${item.recipe.label}`}>
-                          <div className="also-img ">
-                            {" "}
-                            <img src={item.recipe.image} alt="img" />
-                          </div>
-
-                          <div className="also-title">
-                            <p>{item.recipe.label}</p>
-                          </div>
-                        </Link>
-                      </div>
-                    );
-                  })}
+                            <div className="also-title">
+                              <p>{item.recipe.label}</p>
+                            </div>
+                          </Link>
+                        </div>
+                      );
+                    })}
+                </div>
               </div>
-            </div>
+            )}
           </div>
 
           <div className="ad-container">
             <div className="social-icons"></div>
-            <div className="ad-wrapper"></div>
+            <div className="ad-wrapper ad">
+              <img src={ad} alt="adverise" />
+            </div>
           </div>
         </div>
       ) : (
         "Loading"
       )}
-
       <FootSearch />
       <Footer />
     </>

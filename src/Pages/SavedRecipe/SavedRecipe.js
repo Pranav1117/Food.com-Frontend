@@ -46,10 +46,8 @@ const SavedRecipe = () => {
       const token = localStorage.getItem("token");
       axios.defaults.headers.common["Authorization"] = `Beare ${token}`;
 
-      const resp = await axios.get(
-        "https://food-com-backend.onrender.com/getsaveredcipe"
-      );
-      console.log(resp.data.saved.saved_recipes);
+      const resp = await axios.get("https://food-com-backend.onrender.com/getsaveredcipe");
+      console.log(resp.data);
       setData(resp.data.saved.saved_recipes);
     } catch (err) {
       console.log(err);
