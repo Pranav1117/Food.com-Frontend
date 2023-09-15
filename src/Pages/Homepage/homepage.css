@@ -307,6 +307,8 @@
 .trending-imgs a{
 text-decoration: none;
 }
+
+
 .trending-imgs a p{
    font-size: 1.2rem;
    font-family: 'Maven Pro', sans-serif;
@@ -626,11 +628,20 @@ text-decoration: none;
 
 .trending-imgs-wrapper{
    overflow-x:scroll ;
+   overflow-y: hidden;
 }
 
 .trending-imgs{
    /* width: 70vw; */
-   width: max-content;
+   /* width: max-content; */
+}
+
+.trending-imgs a img{
+   height: 60%;
+}
+.trending-imgs a p{
+   height: 25%;
+   font-size: 0.8rem;
 }
 
 .dont-miss-container {

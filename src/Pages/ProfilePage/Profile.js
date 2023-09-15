@@ -1,56 +1,78 @@
 import React, { useEffect, useState } from "react";
 import NewNav from "../../Components/Navbar/NewNav";
 import "./profile.css";
-import avatar from "../../Assets/Nav-buttons-icons/user-icon.jpg";
+import avatar from "../../Assets/avatar-icon.png";
 import axios from "axios";
+import Footer from "../../Components/Footer/Footer";
+import iceCreamIcon from "../../Assets/profile-page-icon.jpg";
+import { useSelector, useDispatch } from "react-redux";
+import ad from "../../Assets/adverise.webp";
 
 const Profile = () => {
+  const state = useSelector((state) => state.value.isLoggedIn);
+
   const [date, setDate] = useState(null);
   const [name, setName] = useState(null);
 
   const fetchUser = async () => {
-    const token = localStorage.getItem("token");
-    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    try {
+      const token = localStorage.getItem("token");
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-    const resp = await axios("https://food-com-backend.onrender.com/getuserdata");
-    console.log(resp.data.User.createdAt.split("T")[0]);
-    setDate(resp.data.User.createdAt.split("T")[0]);
-    setName(resp.data.User.email.split("@")[0]);
+      const resp = await axios("https://food-com-backend.onrender.com/getuserdata");
+      console.log(resp.data);
+      if (resp.data.User) {
+        setDate(resp.data.User.createdAt);
+        setName(resp.data.User.email);
+      }
+      return resp.data;
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {
     fetchUser();
-  }, []);
+    console.log(state, "===========state");
+  }, [state]);
 
   return (
     <>
       <NewNav />
       <div className="profile-main-container">
         <header className="profile-header">
-          <div className="header-cover"></div>
+          <div className="header-cover">
+            <div className="user-avatar-wrapper">
+              {" "}
+              <img src={avatar} alt="User Profile" />
+            </div>
+          </div>
 
-          <div className="avatar-container">
-            <div className="profile-photo-container">
-              <div className="profile-avatar">
-                <img src={avatar} alt="User Profile" />
-                <p>@{name && name}</p>
-              </div>
-
-              <div className="followers-wrapper">
-                <div className="followers">
-                  <p>FOLLOWERS</p>
-                  <p>0</p>
-                </div>
-                <hr />
-                <div className="following">
-                  <p>FOLLOWING</p>
-                  <p>0</p>
+          <div className="name-follower-container">
+            <div className="follower-container">
+              <div className="follower-wrapper">
+                <div className="count-wrapper">
+                  <div className="followers">
+                    <p>Followers</p>
+                    <p>0</p>
+                  </div>
+                  <hr />
+                  <div className="following">
+                    <p>Following</p>
+                    <p>0</p>
+                  </div>
                 </div>
               </div>
             </div>
-            <hr />
-            <div className="join-data-container">
-              <p>Joined {date && date}</p>
+
+            <div className="name-join-wrapper">
+              <div className="name-wrapper">
+                <p>{name}</p>
+              </div>
+              <hr />
+              <div className="joined-wrapper">
+                <p>Joined {date}</p>
+              </div>
             </div>
           </div>
         </header>
@@ -69,16 +91,31 @@ const Profile = () => {
               <li>Followers</li>
             </ul>
           </div>
+
           <div className="all-activity-wrapper">
-            <p>All Activity</p>
+            <div className="all-activity-txt">
+              {" "}
+              <p>All Activity</p>
+            </div>
+
             <div className="activity-list">
-              <h3>UH OH</h3>
-              <p>Looks like has no activity</p>
+              <div className="ice-cream-icon">
+                <img src={iceCreamIcon} alt="icon" />
+              </div>
+              <div className="user-activity">
+                {" "}
+                <h3>UH OH!</h3>
+                <p>Looks like {name} has no activity</p>
+              </div>
             </div>
           </div>
-          <div className="profile-ad-container"></div>
+
+          <div className="profile-ad-container ad">
+            <img src={ad} alt="adverise" />
+          </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

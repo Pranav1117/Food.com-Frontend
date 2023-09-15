@@ -18,6 +18,7 @@ import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ad from "../../Assets/adverise.webp";
+import { useSelector, useDispatch } from "react-redux";
 
 const RecipeDetails = () => {
   const [data, setData] = useState(null);
@@ -27,6 +28,7 @@ const RecipeDetails = () => {
   const [showSavedIcon, setShowSavedIcon] = useState(false);
 
   const [savedRecipes, setSavedRecipes] = useState(false);
+  const state = useSelector((state) => state.value.isLoggedIn);
 
   const location = useLocation();
 
@@ -55,33 +57,56 @@ const RecipeDetails = () => {
     });
   };
 
+  const showAlreadyBookToast = () => {
+    toast.info("Recipe already Bookmarked!", {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 2000, // Set the time (in milliseconds) for the toast to auto close
+    });
+  };
+
   const showRemoveToast = () => {
-    toast.info("Recipe Removed from bookmark!", {
+    toast.error("Recipe Removed from bookmark!", {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 2000, // Set the time (in milliseconds) for the toast to auto close
     });
   };
 
   const handleSaveRecipe = async (recipe) => {
-    const token = localStorage.getItem("token");
-    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-
-    await axios.put("https://food-com-backend.onrender.com/saverecipe", recipe).then((res) => {
-      console.log(res);
-      showToast();
-      setShowSavedIcon(!showSavedIcon);
-    });
+    if (state) {
+      const token = localStorage.getItem("token");
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      await axios
+        .put("https://food-com-backend.onrender.com/saverecipe", recipe)
+        .then((res) => {
+          console.log(res);
+          if (res.data.isSaved) {
+            showToast();
+            setShowSavedIcon(!showSavedIcon);
+          } else {
+            showAlreadyBookToast();
+            setShowSavedIcon(true);
+          }
+        });
+      try {
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      return alert("Please login first");
+    }
   };
 
   const handleRemoveRecipe = async (label) => {
     const token = localStorage.getItem("token");
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-    await axios.put("https://food-com-backend.onrender.com/deleterecipe", label).then((res) => {
-      console.log(res.data);
-      showRemoveToast();
-      setShowSavedIcon(!showSavedIcon);
-    });
+    await axios
+      .put("https://food-com-backend.onrender.com/deleterecipe", label)
+      .then((res) => {
+        console.log(res.data);
+        showRemoveToast();
+        setShowSavedIcon(!showSavedIcon);
+      });
   };
 
   const fetchComments = async () => {
@@ -102,7 +127,9 @@ const RecipeDetails = () => {
       const token = localStorage.getItem("token");
       axios.defaults.headers.common["Authorization"] = `Beare ${token}`;
 
-      const resp = await axios.get("https://food-com-backend.onrender.com/getsaveredcipe");
+      const resp = await axios.get(
+        "https://food-com-backend.onrender.com/getsaveredcipe"
+      );
       // console.log(resp.data);
       setSavedRecipes(resp.data.saved.saved_recipes);
     } catch (err) {

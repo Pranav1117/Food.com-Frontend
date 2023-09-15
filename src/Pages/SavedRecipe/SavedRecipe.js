@@ -7,10 +7,13 @@ import "./savedRecipe.css";
 import addIcon from "../../Assets/Nav-buttons-icons/close-icon.png";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+
 const SavedRecipe = () => {
   const [showSearchBar, setShowSearchbar] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [data, setData] = useState(null);
+  const state = useSelector((state) => state.value.isLoggedIn);
 
   const [showSavedRecipe, setShowSavedRecipe] = useState(true);
   const [showBoards, setShowBoards] = useState(false);
@@ -56,7 +59,8 @@ const SavedRecipe = () => {
 
   useEffect(() => {
     fetchSavedRecipes();
-  }, []);
+    console.log(state, "=============state");
+  }, [state]);
 
   return (
     <>
@@ -157,10 +161,12 @@ const SavedRecipe = () => {
                     </div>
                   );
                 })
-              : "Loading"}
+              : ""}
           </div>
         </div>
       )}
+
+      {state ? "" : "Please Login"}
 
       {showBoards && (
         <div className="saved-recipe-container">

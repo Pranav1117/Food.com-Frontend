@@ -1,5 +1,5 @@
 footer{
-
+    position: relative;
     background-color: black;
 }
 
@@ -176,3 +176,4 @@ filter: invert(50%)
     }
     
 }
+

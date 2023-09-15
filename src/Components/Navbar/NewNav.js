@@ -10,7 +10,7 @@ import closeMenu from "../../Assets/Nav-buttons-icons/close-icon.png";
 import Login from "../Authentication/Login";
 import Register from "../Authentication/Register";
 import { useSelector, useDispatch } from "react-redux";
-import userIcon from "../../Assets/Nav-buttons-icons/user-icon.jpg";
+import userIcon from "../../Assets/Nav-buttons-icons/profile.png";
 import axios from "axios";
 import { setIsLoggedIn } from "../../Feautes/Slice";
 
@@ -167,7 +167,10 @@ const NewNav = () => {
       const token = localStorage.getItem("token");
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-      const resp = await axios("https://food-com-backend.onrender.com/checkloggedin");
+      const resp = await axios(
+        "https://food-com-backend.onrender.com/checkloggedin"
+        
+      );
 
       console.log(resp, "in checkkkkk");
       dispatch(setIsLoggedIn(resp.data.isLoggedIn));

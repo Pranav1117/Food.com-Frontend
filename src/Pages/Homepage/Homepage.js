@@ -348,7 +348,7 @@ const Homepage = () => {
 
           <div className="more-ideas-imgs-wrapper">
             <div className="more-ideas-imgs">
-              <Link tp="/details?q=chicken tikka masala">
+              <Link to="/details?q=chicken tikka masala">
                 <img src={moreideas1} alt="CHICKEN TIKKA MASALA" />
                 <p>CHICKEN TIKKA MASALA</p>
               </Link>
